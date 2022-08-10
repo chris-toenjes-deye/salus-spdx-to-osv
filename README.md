@@ -1,5 +1,7 @@
-# spdx-to-osv
-Produce an Open Source Vulnerability JSON file based on information in an SPDX document
+# salus-spdx-to-osv
+Produce an Open Source Vulnerability JSON file based on information in an SPDX document, that has been created with SALUS
+
+[SALUS](https://github.com/microsoft/sbom-tool)
 
 ## Usage
 `java -jar spdx-to-osv-with-dependencies.jar -I SpdxFile.spdx -O OSVOutput.json`

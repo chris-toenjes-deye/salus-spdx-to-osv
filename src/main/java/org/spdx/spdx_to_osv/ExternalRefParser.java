@@ -29,8 +29,8 @@ import us.springett.parsers.cpe.values.Part;
 public class ExternalRefParser {
     
 	static final Pattern SWH_PATTERN = Pattern.compile("swh:1:(cnt|dir|rev|rel|snp):([0123456789abcdef]{40})$");
-    static final Pattern PURL_PATTERN = Pattern.compile("pkg:((?<type>[^?/#@]+)/)((?<namespace>[^?#@]+)/)?(?<name>[^?#@]+)(@(?<version>[^?#]+))?(\\?[^#]+)*(#.+)*$");
-	
+    static final Pattern PURL_PATTERN = Pattern.compile("pkg:((?<type>[^?/#@]+)/)((?<namespace>[^?#]+)/)?(?<name>[^?#@]+)(@(?<version>[^?#]+))?(\\?[^#]+)*(#.+)*$");
+
     private boolean useMavenGroupInPkgName = true;
 	private ExternalRef externalRef;
     Optional<OsvVulnerabilityRequest> osvVulnerabilityRequest = Optional.empty();
@@ -108,6 +108,9 @@ public class ExternalRefParser {
      * @throws InvalidExternalRefPattern 
      */
     private void paserPurl(String referenceLocator) throws InvalidExternalRefPattern {
+        if (referenceLocator.contains("%40")) {
+            referenceLocator = referenceLocator.replace("%40", "@");
+        }
         Matcher match = PURL_PATTERN.matcher(referenceLocator);
         if (!match.matches()) {
         	throw new InvalidExternalRefPattern("Purl reference locator '"+referenceLocator+
